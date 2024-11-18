@@ -11,7 +11,8 @@ import {
   ListItemText,
   CircularProgress,
 } from "@mui/material";
-import { auth } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
 import { socket } from "@/lib/socket";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -72,8 +73,12 @@ const ChatComponent = () => {
     if (!newMessage.trim() || !user) return;
 
     try {
+      console.log(auth.currentUser);
+      const docRef = doc(db, "users", auth.currentUser.uid);
+      const docSnap = await getDoc(docRef);
+
       const token = await auth.currentUser.getIdToken();
-      socket.emit("new_message", token, newMessage.trim());
+      socket.emit("new_message", docSnap.data().username, newMessage.trim());
       setNewMessage("");
     } catch (err) {
       setError("Failed to send message");
