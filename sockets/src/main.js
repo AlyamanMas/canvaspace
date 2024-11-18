@@ -1,6 +1,7 @@
 import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
+import { syncVariableToDisk, reconstructVariable } from "./utils.js";
 import cors from "cors";
 
 const app = express();
@@ -11,21 +12,21 @@ const io = new Server(server, {
   },
 });
 
-const messages = [
-  ["alyamanmas", "helloworld"],
-  ["alyamanmas", "im here"],
-  ["vexedblaze", "this is a default message"],
-];
+const messages = reconstructVariable("messages.json");
+const stopSyncingMessages = syncVariableToDisk(messages, "messages.json", 5000);
 
-const width = 64;
-const height = 64;
-const pixelsMatrix = Array(height)
-  .fill()
-  .map(() =>
-    Array(width)
-      .fill()
-      .map(() => [null, "#ffffff"]),
-  );
+//const width = 64;
+//const height = 64;
+//const pixelsMatrix = Array(height)
+//  .fill()
+//  .map(() =>
+//    Array(width)
+//      .fill()
+//      .map(() => [null, "#ffffff"]),
+//  );
+
+const pixelsMatrix = reconstructVariable("canvas.json");
+const stopSyncingCanvas = syncVariableToDisk(pixelsMatrix, "canvas.json", 5000);
 
 app.use(cors());
 

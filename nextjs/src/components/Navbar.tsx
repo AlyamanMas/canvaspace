@@ -49,7 +49,7 @@ export default function Navbar() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "black" }}>
+    <AppBar sx={{ backgroundColor: "black" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Menu Icon - Mobile Only */}

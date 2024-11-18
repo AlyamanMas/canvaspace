@@ -12,12 +12,11 @@ export default function CanvasPage() {
       <Box
         sx={{
           width: "100%",
-          height: "100vh",
-          p: 2,
+          height: "calc(100vh - 4em)",
           backgroundColor: "#f5f5f5",
         }}
       >
-        <Grid container spacing={2} sx={{ height: "100%" }}>
+        <Grid container sx={{ height: "100%" }}>
           {/* Left Column - Contains Canvas and ColorPicker */}
           <Grid
             xs={12}
@@ -30,11 +29,9 @@ export default function CanvasPage() {
           >
             {/* Canvas Container */}
             <Grid
-              xs={12}
               sx={{
                 flexGrow: 1,
                 minHeight: { xs: "60vh", md: 0 },
-                mb: 2,
               }}
             >
               <Box
@@ -51,13 +48,7 @@ export default function CanvasPage() {
             </Grid>
 
             {/* ColorPicker Container */}
-            <Grid
-              xs={12}
-              sx={{
-                height: "auto",
-                minHeight: { xs: "100px", md: "120px" },
-              }}
-            >
+            <Grid size="grow">
               <Box
                 sx={{
                   height: "100%",

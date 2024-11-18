@@ -30,10 +30,8 @@ export default function ColorPicker() {
         flexWrap: "wrap",
         gap: 1,
         p: 2,
-        maxWidth: "320px",
         backgroundColor: "white",
         borderRadius: 1,
-        boxShadow: 1,
       }}
     >
       {COLORS.map((color) => (

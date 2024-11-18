@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/context/auth-context";
 import Navbar from "@/components/Navbar";
+import { Box } from "@mui/material";
 
 export const metadata: Metadata = {
   title: "Space",
@@ -18,7 +19,7 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <Navbar />
-          {children}
+          <Box sx={{ pt: 8 }}>{children}</Box>
         </AuthProvider>
       </body>
     </html>

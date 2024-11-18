@@ -27,7 +27,6 @@ const ChatComponent = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Handle auth state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -37,7 +36,6 @@ const ChatComponent = () => {
   }, []);
 
   useEffect(() => {
-    // Fetch initial messages
     const fetchMessages = async () => {
       try {
         const response = await fetch("http://localhost:3111/messages");
@@ -56,13 +54,11 @@ const ChatComponent = () => {
 
     fetchMessages();
 
-    // Listen for new messages
     socket.on("new_message", (message) => {
       setMessages((prev) => [...prev, message]);
       scrollToBottom();
     });
 
-    // Cleanup
     return () => {
       socket.off("new_message");
     };
@@ -121,10 +117,20 @@ const ChatComponent = () => {
   return (
     <Paper
       elevation={3}
-      sx={{ p: 2, height: "500px", display: "flex", flexDirection: "column" }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%", // Take up full height of the container
+      }}
     >
       {/* Messages area */}
-      <Box sx={{ flexGrow: 1, overflow: "auto", mb: 2 }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          overflowY: "auto",
+          p: 2,
+        }}
+      >
         <List>
           {messages.map((msg, index) => (
             <ListItem
@@ -155,7 +161,14 @@ const ChatComponent = () => {
       </Box>
 
       {/* Input area */}
-      <Box sx={{ display: "flex", gap: 1 }}>
+      <Box
+        sx={{
+          p: 2,
+          borderTop: "1px solid #ddd",
+          display: "flex",
+          gap: 1,
+        }}
+      >
         <TextField
           fullWidth
           variant="outlined"

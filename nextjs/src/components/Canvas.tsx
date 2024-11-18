@@ -9,6 +9,8 @@ const API_BASE_URL =
     ? "https://your-production-api.com" // TODO: Replace with your production API URL
     : "http://localhost:3111";
 
+const CELL_SIZE = 10; // pixels - adjust this value to change the size of cells
+
 export default function Canvas() {
   const [pixels, setPixels] = useState([]);
   const { selectedColor } = useCanvas();
@@ -57,46 +59,61 @@ export default function Canvas() {
     return <Box sx={{ p: 2, textAlign: "center" }}>Loading canvas...</Box>;
   }
 
+  // Calculate total width and height
+  const totalWidth = pixels[0].length * CELL_SIZE;
+  const totalHeight = pixels.length * CELL_SIZE;
+
   return (
     <Box
       sx={{
         width: "100%",
-        maxWidth: "100vw",
+        height: "100%",
         overflow: "auto",
         border: "1px solid #ccc",
         borderRadius: 1,
         backgroundColor: "white",
         boxShadow: 1,
-        p: 2,
       }}
     >
-      <table
-        style={{
-          borderCollapse: "collapse",
-          tableLayout: "fixed",
+      <Box
+        sx={{
+          width: totalWidth,
+          height: totalHeight,
+          minWidth: "100%",
+          position: "relative",
         }}
       >
-        <tbody>
-          {pixels.map((row, y) => (
-            <tr key={y}>
-              {row.map(([token, color], x) => (
-                <td
-                  key={`${x}-${y}`}
-                  onClick={() => handlePixelClick(x, y)}
-                  style={{
-                    width: "10px",
-                    height: "10px",
-                    backgroundColor: color,
-                    border: "1px solid #eee",
-                    padding: 0,
-                    cursor: "pointer",
-                  }}
-                />
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <table
+          style={{
+            borderCollapse: "collapse",
+            tableLayout: "fixed",
+            width: totalWidth,
+            height: totalHeight,
+          }}
+        >
+          <tbody>
+            {pixels.map((row, y) => (
+              <tr key={y} style={{ height: CELL_SIZE }}>
+                {row.map(([token, color], x) => (
+                  <td
+                    key={`${x}-${y}`}
+                    onClick={() => handlePixelClick(x, y)}
+                    style={{
+                      width: CELL_SIZE,
+                      height: CELL_SIZE,
+                      minWidth: CELL_SIZE,
+                      minHeight: CELL_SIZE,
+                      backgroundColor: color,
+                      padding: 0,
+                      cursor: "pointer",
+                    }}
+                  />
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Box>
     </Box>
   );
 }
