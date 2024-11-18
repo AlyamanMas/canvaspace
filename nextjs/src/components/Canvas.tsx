@@ -89,6 +89,7 @@ export default function Canvas() {
             tableLayout: "fixed",
             width: totalWidth,
             height: totalHeight,
+            border: "1px solid #ccc",
           }}
         >
           <tbody>
