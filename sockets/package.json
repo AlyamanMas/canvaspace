@@ -4,6 +4,7 @@
   "description": "for messaging and canvas",
   "type": "module",
   "dependencies": {
+    "bad-words": "^4.0.0",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "socket.io": "^4.8.1"

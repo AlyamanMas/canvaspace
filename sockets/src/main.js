@@ -2,8 +2,10 @@ import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import { syncVariableToDisk, reconstructVariable } from "./utils.js";
+import { Filter } from "bad-words";
 import cors from "cors";
 
+const filter = new Filter();
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
@@ -46,6 +48,7 @@ io.on("connection", (socket) => {
     console.log("token:" + token);
     // TODO: verify and get user identity and use it instead of pushing token
     // TODO: only retain a maximum number of messages
+    message = filter.clean(message);
     messages.push([token, message]);
     io.emit("new_message", [token, message]);
   });
